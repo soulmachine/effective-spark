@@ -12,3 +12,8 @@
 	}
 
 因为`mapPartition`里引用了`rnd`, 而`Random`对象没有继承自`Serialize`，是不可序列化的，所以会报异常。把 `val rnd = new Random()` 移动到 `mapPartion()`里面才行。
+
+### 在一个RDD的api里，不能引用另一个RDD
+RDD是不可序列化的，在一个RDD的api里，不能引用另一个RDD。
+
+如果你在一个RDD的API里，例如map()里，引用了另一个RDD，编译虽然会通过，但是运行会出现 `java.lang.NullPointerException`
